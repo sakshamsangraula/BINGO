@@ -1,0 +1,169 @@
+package bingo;
+
+public class BINGO {
+
+	public static void main(String[] args) {
+		playBingo();
+	}
+	
+	// this method generates unique random numbers and if they equal to a value
+	// on the board then it replaces that number with a zero
+	public static void playBingo()
+	{
+		int[][] board = createBoard();
+		displayBoard(board);
+		String randNums = "";
+
+		
+		// while the board is not a winner keep running this code
+		// so that there will be all zeros in a row, column or diagonal
+		while(!isWinner(board))
+		{
+		
+				// generate a random odd integer from 11 to 99 inclusive
+				int num = (int) (Math.random()*45) *2 +11;
+				
+				// if the num generated is not unique then the num gets stuck
+				// in the while loop and it gets out of it after a completely
+				// unique num between 11 to 99 inclusive is generated
+				
+				while (randNums.contains(""+ num))
+				{
+					num = (int) (Math.random()*45) *2 + 11;
+				}
+				
+				// add num to randNums string so that another number equal to 
+				// num cannot be used again
+				randNums+= num + " ";
+				
+				
+				for(int row=0; row<5; row++)
+				{
+					for(int col=0; col<5; col++)
+					{
+						// check every single value in the board to see
+						// if it equals to num and if it does then replace
+						// that value in the board with a zero
+						if(board[row][col] == num)
+						{
+							board[row][col] = 0;
+						}
+						
+					}
+				}
+		}
+				
+				// Print out the random numbers
+				System.out.println("Numbers: " + randNums);
+				
+				// call the isWinner method
+				
+				// if the isWinner method returns true then call
+				// the display method again to display the updated board
+				// and print out a message saying this is a winner
+				
+				if(isWinner(board))
+				{
+					displayBoard(board);
+					System.out.println("This is a winner!");
+				}
+				
+				
+	}
+	
+	// This method creates a board with 5 rows and 5 columnds
+	public static int[][] createBoard()
+	{
+		// create a new 2d array called board
+		int[][] board = new int [5][5];
+		
+		// Loop from row 0 until but not including 5
+		// Loop from column 0 until but not including 5
+		
+		// Initialize a string called uniqueNums
+		String uniqueNums = "";
+		for(int row = 0; row < 5; row++)
+		{
+			for(int col = 0; col < 5; col++)
+			{
+				// generate a random odd number between 11 and 99
+				int num = (int) (Math.random()*45) * 2 + 11;
+				
+				// use a while loop to make sure that the num generated is unique
+				while(uniqueNums.contains("" + num))
+				{
+					num = (int) (Math.random()*45) * 2 + 11;
+				}
+				
+				// add the unique num to board
+				board[row][col] = num;
+				
+				// add num to uniqueNums string so we can check to see if another
+				// number which is the same as num is present or not and if it is
+				// then the while loop will catch it and a new unique num will be 
+				// generated
+				
+				
+				uniqueNums += num;
+				
+				// set middle square in the 2d array to zero
+				board[2][2] = 0;
+				
+				
+			}
+		}
+		return board;
+
+	}
+	
+	// This method displays the board in a neat and orderly way
+	public static void displayBoard(int[][] board)
+	{
+		// print a new line so that when this method is called again
+		// it looks neat
+		System.out.println();
+		// Loop through the 2d array
+		for(int row=0; row<5; row++)
+		{
+			for(int col=0; col<board[row].length; col++)
+			{
+				// print out the values in board followed by a tab
+				// using tab will make sure that the numbers are
+				// ordered neatly and correctly
+				System.out.print(board[row][col] + "\t");
+			}
+			// after printing out the values of one entire row print a new line
+			System.out.println();
+		}
+		
+		// Print a new line so that when the random unique numbers in the playBingo()
+		// method are printed then it looks nice and is easier to read
+		System.out.println();
+			
+	}
+	
+	// This method returns true if there are a series of all zeros in a row,
+	// column, diagonal from left to right, or a diagonal from right to left
+	public static boolean isWinner(int[][] board)
+	{
+		// Loop through the rows of the board
+		for(int row=0; row<5; row++)
+		{
+			// if a single row or column or the diagonal from 
+			// left to right or right to left has all values equal to zero then 
+			// return true else return false
+if((board[0][row] == 0 && board[1][row]==0 && board[2][row] == 0
+&& board[3][row] == 0 && board[4][row] == 0) || (board[row][0] == 0 &&
+board[row][1] == 0 && board[row][2]==0 && board[row][3] == 0 && board[row][4] == 0)
+|| (board[0][0] == 0 && board[1][1]==0 && board[2][2] == 0 && board[3][3] == 0 && board[4][4]==0)
+|| (board[0][4] == 0 && board[1][3] == 0 && board[2][2]==0 && board[3][1] == 0 && board[4][0] == 0)) {
+	return true;
+	
+}
+		}
+		return false;
+		
+		
+	}
+
+}
