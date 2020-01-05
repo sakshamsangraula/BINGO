@@ -34,6 +34,9 @@ public class BINGO {
 				
 				// add num to randNums string so that another number equal to 
 				// num cannot be used again
+				
+				// adding numbers to a string allows us to use the .contains() java string
+				// method to check if the new number generated is unique or not
 				randNums+= num + " ";
 				
 				
